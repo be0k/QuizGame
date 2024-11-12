@@ -65,7 +65,16 @@ public class ClientProtocol {
 		try {
 			out.write("qgp/0/0" + '\n');
 			out.flush();
-			q_num = Integer.parseInt(in.readLine());
+			String[] inputMessage = in.readLine().split("/");
+			if(inputMessage[0].equalsIgnoreCase("qgp")) {
+				if(Integer.parseInt(inputMessage[1])==0) {
+					q_num = Integer.parseInt(inputMessage[2]);
+				}else {
+					System.out.println("올바른 프로토콜이 아닙니다.");
+				}
+			}else {
+				System.out.println("올바른 프로토콜이 아닙니다.");
+			}
 		}catch (IOException e) {
 			System.out.println("질문의 개수를 받아오는 동안 오류가 발생했습니다.");
 		}
@@ -82,7 +91,18 @@ public class ClientProtocol {
 					out.write("qgp/3/0" + '\n');
 					out.flush();
 					
-					q_num = Integer.parseInt(in.readLine());
+					String[] inputMessage = in.readLine().split("/");
+					if(inputMessage[0].equalsIgnoreCase("qgp")) {
+						if(Integer.parseInt(inputMessage[1])==3) {
+							q_num = Integer.parseInt(inputMessage[2]);
+						}else {
+							System.out.println("올바른 프로토콜이 아닙니다.");
+						}
+					}else {
+						System.out.println("올바른 프로토콜이 아닙니다.");
+					}
+
+					
 				}catch (IOException e) {
 					System.out.println("서버에서 점수를 불러오는 중에 오류가 발생했습니다..");
 				}
@@ -94,18 +114,27 @@ public class ClientProtocol {
 			
 			//This protocol make client to solve "one" question.
 			try {
-			out.write("qgp/1/" + idx + '\n');
-			out.flush();
-			
+				out.write("qgp/1/" + idx + '\n');
+				out.flush();
+				
 			} catch (IOException e) {
 				System.out.println("서버와 통신 중에 오류가 발생했습니다.");
 			}
 			
 			//receive question
 			try {
-				String inputMessage = in.readLine();
-				label1.setText(inputMessage);
-				System.out.println("Qusetion: " + inputMessage);
+				String[] inputMessage = in.readLine().split("/");
+				if(inputMessage[0].equalsIgnoreCase("qgp")) {
+					if(Integer.parseInt(inputMessage[1])==1) {
+						label1.setText(inputMessage[2]);
+						System.out.println("Qusetion: " + inputMessage[2]);
+					}else {
+						System.out.println("올바른 프로토콜이 아닙니다.");
+					}
+				}else {
+					System.out.println("올바른 프로토콜이 아닙니다.");
+				}
+				
 				
 			} catch (IOException e) {
 				System.out.println("서버에서 문제를 받아오는 중에 오류가 발생했습니다.");
@@ -128,9 +157,20 @@ public class ClientProtocol {
 			
 			//receive result
 			try {
-				String resultMessage = in.readLine();
-				label2.setText("<html>결과<br>" + resultMessage + "</html>");
-				System.out.println("Result: " + resultMessage);
+				String[] inputMessage = in.readLine().split("/");
+				if(inputMessage[0].equalsIgnoreCase("qgp")) {
+					if(Integer.parseInt(inputMessage[1])==2) {
+						
+						label2.setText("<html>결과<br>" + inputMessage[2] + "</html>");
+						System.out.println("Result: " + inputMessage[2]);
+						
+					}else {
+						System.out.println("올바른 프로토콜이 아닙니다.");
+					}
+				}else {
+					System.out.println("올바른 프로토콜이 아닙니다.");
+				}
+				
 			}catch (IOException e) {
 				System.out.println("서버에서 결과를 불러오는 중에 오류가 발생했습니다.");
 			}

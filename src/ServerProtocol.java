@@ -65,30 +65,30 @@ public class ServerProtocol implements Runnable {
 						if(inputMessage[0].equalsIgnoreCase("qgp")) {
 							switch(inputMessage[1]) {
 							case "0":
-								out.write(cnt + "\n");
+								out.write("qgp/0/" + cnt + "\n");
 								out.flush();
 								break;
 							case "1":
-								out.write(qnaArray[Integer.parseInt(inputMessage[2])][0]);
+								out.write("qgp/1/" + qnaArray[Integer.parseInt(inputMessage[2])][0]);
 								out.flush();
 								break;
 							case "2":
 								if(inputMessage[3].replaceAll("\\s", "").equalsIgnoreCase(qnaArray[Integer.parseInt(inputMessage[2])][1])) {
 									
 									//correct case
-									out.write("correct\n");
+									out.write("qgp/2/" + "correct\n");
 									out.flush();
 									corr++;
 								}else {
 									
 									//incorrect case
-									out.write("incorrect\n");
+									out.write("qgp/2/" + "incorrect\n");
 									out.flush();
 								}
 								
 								break;
 							case "3":
-								out.write(corr + "\n");
+								out.write("qgp/3/" + corr + "\n");
 								out.flush();
 								flag = 1;
 								break;
@@ -111,7 +111,6 @@ public class ServerProtocol implements Runnable {
 			}finally {
 				try {
 					if(clientSocket != null)
-						System.out.println("close");
 						clientSocket.close();
 				} catch (IOException e) {
 					System.out.println("Error was occured During chatting with client.");
