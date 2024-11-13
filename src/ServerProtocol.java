@@ -44,7 +44,7 @@ public class ServerProtocol implements Runnable {
 //			
 //			
 			String[][] qnaArray = getQnA();
-			int cnt = 4;
+			int cnt = qnaArray.length;
 			int corr = 0;
 			int flag = 0;
 			System.out.println("Client is connected.");

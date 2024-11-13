@@ -67,6 +67,7 @@ public class ClientProtocol {
 			out.flush();
 			String[] inputMessage = in.readLine().split("/");
 			if(inputMessage[0].equalsIgnoreCase("qgp")) {
+				//0 protocol return
 				if(Integer.parseInt(inputMessage[1])==0) {
 					q_num = Integer.parseInt(inputMessage[2]);
 				}else {
@@ -93,6 +94,7 @@ public class ClientProtocol {
 					
 					String[] inputMessage = in.readLine().split("/");
 					if(inputMessage[0].equalsIgnoreCase("qgp")) {
+						//3 protocol return
 						if(Integer.parseInt(inputMessage[1])==3) {
 							q_num = Integer.parseInt(inputMessage[2]);
 						}else {
@@ -125,6 +127,7 @@ public class ClientProtocol {
 			try {
 				String[] inputMessage = in.readLine().split("/");
 				if(inputMessage[0].equalsIgnoreCase("qgp")) {
+					//1 protocol return
 					if(Integer.parseInt(inputMessage[1])==1) {
 						label1.setText(inputMessage[2]);
 						System.out.println("Qusetion: " + inputMessage[2]);
@@ -159,6 +162,7 @@ public class ClientProtocol {
 			try {
 				String[] inputMessage = in.readLine().split("/");
 				if(inputMessage[0].equalsIgnoreCase("qgp")) {
+					//2 protocol return
 					if(Integer.parseInt(inputMessage[1])==2) {
 						
 						label2.setText("<html>결과<br>" + inputMessage[2] + "</html>");
