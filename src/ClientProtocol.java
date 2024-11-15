@@ -4,12 +4,18 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Properties;
 
 
 public class ClientProtocol {
 	static JButton button;
 	static String text1;
 	
+	private static final String CONFIG_FILE = "./src/server_info.dat";
+    private static final String DEFAULT_IP = "localhost";
+    private static final int DEFAULT_PORT = 9999;
+    
+    
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		BufferedReader in = null;
@@ -50,10 +56,31 @@ public class ClientProtocol {
         // visualize on screen
         frame.setVisible(true);
         
+        String serverIp = DEFAULT_IP;
+        int serverPort = DEFAULT_PORT;
+        
+        try {
+            // 설정 파일 읽기
+            File configFile = new File(CONFIG_FILE);
+            if (configFile.exists()) {
+                Properties properties = new Properties();
+                try (FileInputStream fis = new FileInputStream(configFile)) {
+                    properties.load(fis);
+                }
+                serverIp = properties.getProperty("server_ip", DEFAULT_IP); // 기본값 제공
+                serverPort = Integer.parseInt(properties.getProperty("server_port", String.valueOf(DEFAULT_PORT)));
+            } else {
+                System.out.println("설정 파일이 없습니다. 기본값을 사용합니다.");
+            }
+        } catch (Exception e) {
+            System.err.println("설정 파일 처리 중 오류가 발생했습니다. 기본값을 사용합니다.");
+            e.printStackTrace();
+        }
+        
         
         //Connect to socket
         try {
-			socket = new Socket ("localhost", 9999);
+			socket = new Socket (serverIp, serverPort);
 			in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 			out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
         } catch (IOException e) {
